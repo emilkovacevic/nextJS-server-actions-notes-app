@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  provider          String
+  providerAccountId String
+  providerType      String
+  createdAt         Int?
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum MemberRole {
+  ADMIN
+  MODERATOR
+  USER
+}
+
+model User {
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  email          String     @unique
+  emailVerified  DateTime?
+  hashedPassword String?
+  role           MemberRole @default(USER)
+  image          String?
+  soldItems      Int        @default(0)
+  address        String?
+  tel            String?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  accounts       Account[]
+  sessions       Session[]
+  Post           Todos[]
+}
+
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+enum TodoType {
+  STANDARD
+  PRIORITY
+}
+
+enum TodoState {
+  IN_PROGRESS
+  ON_STANDBY
+  CANCELED
+  COMPLETED
+}
+
+model Todos {
+  id        String    @id @default(cuid()) @map("_id")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  title     String
+  desc      String
+  completed Boolean   @default(false)
+  state     TodoState @default(ON_STANDBY)
+  type      TodoType  @default(STANDARD)
+  userEmail String
+  user      User      @relation(fields: [userEmail], references: [email])
+}
