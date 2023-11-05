@@ -1,14 +1,15 @@
 import NextLink from "next/link";
 
-interface LinkInterface {
+type LinkInterface = {
   href: string;
+  className?: string
   children: React.ReactNode;
 }
 
-const Link = ({ href, children }: LinkInterface) => {
+const Link = ({ href, children, className }: LinkInterface) => {
   return (
     <NextLink
-      className="font-semibold hover:underline text-accent-foreground"
+      className={`${className} font-semibold hover:underline text-accent-foreground`}
       href={href}
     >
       {children}

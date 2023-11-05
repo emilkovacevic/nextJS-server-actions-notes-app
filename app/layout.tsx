@@ -9,7 +9,7 @@ import Footer from "@/components/footer/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "TODOS - nexJS server actions project",
+  title: "Notes - nexJS server actions project",
   description: "Personal project to learn server actions.",
   keywords: "next, react, project, server, action, 14",
 };
@@ -20,10 +20,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <AuthProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeProvider
+           storageKey="website_theme"
+           attribute="class"
+           defaultTheme="system"
+           enableSystem
+           disableTransitionOnChange
+          >
             <div className="flex flex-col min-h-screen">
               <Navbar />
               <div className="grow my-5">{children}</div>

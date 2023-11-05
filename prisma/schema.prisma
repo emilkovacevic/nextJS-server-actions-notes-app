@@ -13,10 +13,9 @@ datasource db {
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
   userId            String  @db.ObjectId
+  type              String
   provider          String
   providerAccountId String
-  providerType      String
-  createdAt         Int?
   refresh_token     String? @db.String
   access_token      String? @db.String
   expires_at        Int?
@@ -32,16 +31,12 @@ model Account {
 
 model Session {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  sessionToken String   @unique
-  userId       String   @db.ObjectId
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-enum MemberRole {
-  ADMIN
-  MODERATOR
-  USER
+  sessionToken String   @unique
+  accessToken  String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [id], references: [id])
 }
 
 model User {
@@ -50,23 +45,21 @@ model User {
   email          String     @unique
   emailVerified  DateTime?
   hashedPassword String?
-  role           MemberRole @default(USER)
   image          String?
-  soldItems      Int        @default(0)
-  address        String?
-  tel            String?
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
   accounts       Account[]
   sessions       Session[]
-  Post           Todos[]
+  Notes          Notes[]
 }
 
-model VerificationToken {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+model VerificationRequest {
+  id         String   @id @default(cuid()) @map("_id")
   identifier String
   token      String   @unique
   expires    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@unique([identifier, token])
 }
@@ -83,15 +76,14 @@ enum TodoState {
   COMPLETED
 }
 
-model Todos {
+model Notes {
   id        String    @id @default(cuid()) @map("_id")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @default(now())
   title     String
   desc      String
-  completed Boolean   @default(false)
   state     TodoState @default(ON_STANDBY)
   type      TodoType  @default(STANDARD)
   userEmail String
-  user      User      @relation(fields: [userEmail], references: [email])
+  user      User      @relation(fields: [userEmail], references: [email], onDelete: Cascade) 
 }
