@@ -12,7 +12,7 @@ const Navbar = async () => {
       <div className="container flex gap-2 justify-between items-center">
         <Link href="/">Notes</Link>
         <ul className="flex gap-2 justify-between items-center">
-          {session?.user.email ? (
+          {session ? (
             <li>
               <AccountDropdownMenu />
             </li>

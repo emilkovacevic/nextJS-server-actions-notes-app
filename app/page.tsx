@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import NotesContainer from "@/components/todos/NotesContainer";
+import NotesContainer from "@/components/notes/NotesContainer";
 import Link from "@/components/ui/link";
 import H1 from "@/components/ui/h1";
 
@@ -8,7 +8,7 @@ export default async function Home() {
 
   return (
     <main className="container grid items-center">
-      {session?.user.email ? (
+      {session ? (
         <NotesContainer session={session} />
       ) : (
         <div className="text-center space-y-4">
