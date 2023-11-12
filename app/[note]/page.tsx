@@ -23,7 +23,7 @@ const page = async({params}:{
     })
     revalidatePath('/')
    }catch(error){
-
+    console.error(error)
    }
   }
 

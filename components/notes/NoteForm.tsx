@@ -36,12 +36,14 @@ const NoteForm = ({setIsOpenDialog, noteData}: NoteFormProps) => {
         startTransition(()=> createNote(formData))
       }
     } catch (error) {
-      
+      console.error(error)
     }
   }
 
   return (
-    <section>
+    <section
+    className="w-full"
+    >
       {
         setIsOpenDialog &&
       <div
@@ -57,13 +59,14 @@ const NoteForm = ({setIsOpenDialog, noteData}: NoteFormProps) => {
       <form action={onSubmit} className="space-y-8">
         <Input
         name="id"
+        className="hidden"
         value={noteData?.id}
         
         />
         <Input
         defaultValue={noteData?.title}
         name="title" placeholder="Note title" type="text" />
-        <Select name="noteType" defaultValue={noteData?.type}>
+        <Select name="noteType" defaultValue={noteData?.type ?? 'STANDARD'}>
           <SelectTrigger className="w-[240px]">
           <Label>Note type</Label>
             <SelectValue
@@ -77,7 +80,7 @@ const NoteForm = ({setIsOpenDialog, noteData}: NoteFormProps) => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Select name="noteState" defaultValue={noteData?.state}>
+        <Select name="noteState" defaultValue={noteData?.state ?? "ON_STANDBY"}>
           <SelectTrigger className="w-[240px]">
             <Label>Note status</Label>
             <SelectValue placeholder="ON_STANDBY"  />

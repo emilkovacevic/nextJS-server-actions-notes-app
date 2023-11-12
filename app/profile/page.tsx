@@ -43,7 +43,7 @@ const page = async () => {
       revalidatePath('/profile')
     }
     catch(error){
-      console.log('error')
+      console.error('error')
     }
   }
   return (

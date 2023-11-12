@@ -33,8 +33,8 @@ const UpdateNote = ({ funcName, handleDelete, note }: EditNoteType) => {
         </Button>
       )}
       {editingOn && (
-        <div className="absolute w-screen h-screen top-0 left-0 z-30 bg-background flex items-center justify-center">
-          <div className="flex justify-center p-4 items-center bg-card">
+        <div className="absolute w-screen h-screen top-0 left-0 z-30 bg-background flex  justify-center">
+          <div className="flex justify-center p-4 w-full lg:w-2/3 bg-card">
             <NoteForm noteData={note} setIsOpenDialog={setEditingOn}/>
           </div>
         </div>

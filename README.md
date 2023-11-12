@@ -1,8 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+# Next.js Notes App
+
+A simple notes taking app built with Next.js, featuring the new NextJS server actions.
+
+![Notes app](./notesapp.png)
+
+Features
+User Authentication: Secure user authentication system with login and registration functionality.
+MongoDB Database: Utilizes MongoDB as the database provider.
+Prisma Schema: Defines the data model for the application using Prisma schema.
+
+Notes Management: Allows users to create, update, and manage notes with titles, descriptions, states, and types.
 
 ## Getting Started
 
-First, run the development server:
+1. create a .env file based on the `example.env` file located in the root directory.
+2. Install the node dependencies with:
+
+```bash
+npm install
+
+```
+
+3. Run the development server:
 
 ```bash
 npm run dev
