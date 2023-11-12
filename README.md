@@ -6,11 +6,9 @@ A simple notes taking app built with Next.js, featuring the new NextJS server ac
 ![Notes app](./notesapp.png)
 
 Features
-User Authentication: Secure user authentication system with login and registration functionality.
-MongoDB Database: Utilizes MongoDB as the database provider.
-Prisma Schema: Defines the data model for the application using Prisma schema.
-
-Notes Management: Allows users to create, update, and manage notes with titles, descriptions, states, and types.
+- Secure user authentication system with next-auth.
+- Utilizes Prisma with MongoDB as the database provider.
+- Allows users to create, update, and manage notes with titles, descriptions, states, and types.
 
 ## Getting Started
 
