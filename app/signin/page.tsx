@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter, redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 import { signIn } from 'next-auth/react'
@@ -45,7 +45,7 @@ const SignIn = () => {
     }
   }
 
-  if (session) redirect('/')
+  if (session) router.push('/')
 
   return (
     <main className="flex items-center justify-center text-center my-10">
