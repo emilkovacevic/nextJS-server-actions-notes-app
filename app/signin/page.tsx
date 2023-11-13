@@ -10,6 +10,8 @@ import { z } from 'zod'
 import Input from './Input'
 import OAuthSignIn from '@/components/auth-button/SignIn'
 import { Button } from '@/components/ui/button'
+import { useState } from 'react'
+import H1 from '@/components/ui/h1'
 
 interface LoginData {
   email: string
@@ -26,6 +28,7 @@ const schema = z.object({
 
 const SignIn = () => {
   const { data: session } = useSession()
+  const [err, setErr] = useState(false)
   const router = useRouter()
   const {
     handleSubmit,
@@ -35,12 +38,17 @@ const SignIn = () => {
 
   const onSubmit: SubmitHandler<LoginData> = async (data) => {
     try {
-      signIn('credentials', {
+      const response = await signIn('credentials', {
         ...data,
         redirect: false,
       })
-      router.push('/')
+      if (response?.error) {
+        setErr(true);
+      } else {
+        setErr(false)
+      }
     } catch (error) {
+      setErr(true)
       console.log(error)
     }
   }
@@ -48,10 +56,13 @@ const SignIn = () => {
   if (session) router.push('/')
 
   return (
-    <main className="flex items-center justify-center text-center my-10">
-      <div className="bg-card text-foreground shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full md:max-w-md">
+    <main className="text-center">
+    <H1 title='Wellcome Back!' />
+      <div className="p-5 shadow max-w-lg mx-auto m-1 bg-card">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h1 className="mb-4">Sign In</h1>
+          {
+            err ? <p className='text-destructive-foreground bg-destructive mb-4 p-2'>Bad Credentials</p> : null
+          }
           <div className="mb-4">
             <Controller
               render={({ field }) => (

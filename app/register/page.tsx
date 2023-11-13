@@ -27,7 +27,7 @@ const page = async () => {
             hashedPassword,
           },
         });
-        redirect("/");
+        redirect("/signin");
       } catch (error) {
         console.error(error);
       }
